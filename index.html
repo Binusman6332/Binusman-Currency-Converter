@@ -12,24 +12,17 @@
     <input type="number" id="amount" placeholder="Enter amount" />
     
     <div class="selectors">
-      <select id="fromCurrency">
-        <option value="USD">USD</option>
-        <option value="NGN">NGN</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
+      <div class="currency-group">
+      <img id="fromflag" width="24" height="16" />
+      <select id="fromCurrency"></select>
 
       <span>to</span>
 
-      <select id="toCurrency">
-        <option value="NGN">NGN</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-      </select>
-    </div>
+      <img id="toflag" width="24" height="16" />
+      <select id="toCurrency"></select>
+      </div>  
+  </div>
 
-    <button id="convertBtn">Convert</button>
     <p id="result">Result will appear here</p>
   </div>
    <hr>
