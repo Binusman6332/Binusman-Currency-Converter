@@ -2,51 +2,62 @@ body {
   font-family: sans-serif;
   background: #f9f9f9;
   text-align: center;
-  padding-top: 50px;
+  padding: 20px;
+  margin: 0;
 }
 
-h1{
-  font-size: 30px
-}
 .container {
   background: white;
-  padding: 30px;
+  padding: 20px;
   border-radius: 10px;
-  width: 300px;
-  margin: auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input, select, button {
-  margin: 10px;
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+input,
+select {
+  margin: 10px 0;
   padding: 10px;
-  width: 80%;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
-button {
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
+.currency-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 #result {
   margin-top: 20px;
   font-size: 18px;
 }
-.information {
-  font-size: 13px
-}
 
-.currency-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 10px 0;
+/* ✅ Mobile responsive tweaks */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .currency-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  input,
+  select {
+    width: 100%;
+  }
 }
