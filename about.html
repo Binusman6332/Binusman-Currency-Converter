@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>About</title>
+  <link rel="stylesheet" href="style.css" />
 <style>
 body{
 background-color: black;color: white;
@@ -18,11 +19,22 @@ font-size: 30px;
 </style>
 </head>
 <body>
+
+<div class="menu-bar">
+  <div class="menu-icon" onclick="toggleMenu()">&#8942;</div>
+  <div class="dropdown-menu" id="dropdownMenu">
+    <a href="index.html">home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</div>
+
   <h1>About me</h1>
 <center>
    <img src="binusman.jpg" alt="Binusman">
   <p>My name is <em>Al-mustafa Usman</em>, I am a Sofware Developer<br>I dedicate this work of mine to my crypto friends, use it to your advantage.</p>
 </center>
+<script src="script.js"></script>
 </body>
 </html>
  

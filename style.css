@@ -1,10 +1,47 @@
 body {
-  font-family: sans-serif;
-  background: #f9f9f9;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 10px;
+  padding: 40px;
   text-align: center;
-  padding: 20px;
-  margin: 0;
 }
+
+.menu-bar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  z-index: 100;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #cccccc;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
 
 .container {
   background: white;
@@ -21,6 +58,11 @@ h1 {
   margin-bottom: 20px;
 }
 
+.icon {
+  width: 20px;
+  vertical-align: middle;
+}
+
 input,
 select {
   margin: 10px 0;
@@ -32,32 +74,52 @@ select {
   box-sizing: border-box;
 }
 
-.currency-group {
+.selectors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.currency {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
+ align-items: stretch;
+}
+
+.currency select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.flag {
+  width: 32px;
+  height: 24px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
 }
 
 #result {
-  margin-top: 20px;
   font-size: 18px;
+  font-weight: ;
+  color: #222;
+  margin-top: 15px;
 }
 
+footer {
+  margin-top: 30px;
+}
+
+footer .socials a {
+  color: darkblue;
+  margin: 0 10px;
+  font-size: 20px;
+}
 /* ✅ Mobile responsive tweaks */
 @media (max-width: 480px) {
   h1 {
     font-size: 20px;
   }
-
-  .currency-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  input,
-  select {
-    width: 100%;
-  }
-}

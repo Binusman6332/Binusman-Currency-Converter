@@ -1,127 +1,98 @@
-// Mapping currency codes to country codes
-const currencyToCountry = {
-  USD: "US",
-  NGN: "NG",
-  EUR: "EU",
-  GBP: "GB",
-  JPY: "JP",
-  CAD: "CA",
-  AUD: "AU",
-  CNY: "CN",
-  INR: "IN",
-  BRL: "BR",
-  ZAR: "ZA",
-  RUB: "RU",
-  TRY: "TR",
-  KRW: "KR",
-  AED: "AE",
+const currencySelect = document.getElementById("from-currency");
+const toCurrencySelect = document.getElementById("to-currency");
+const amountInput = document.getElementById("amount");
+const resultDisplay = document.getElementById("result");
+const fromFlag = document.getElementById("from-flag");
+const toFlag = document.getElementById("to-flag");
+
+// Currency and country code list
+const countryCurrency = {
+  USD: "us",
+  EUR: "eu",
+  GBP: "gb",
+  NGN: "ng",
+  JPY: "jp",
+  CAD: "ca",
+  AUD: "au",
+  INR: "in",
+  CNY: "cn",
+  BRL: "br",
+  ZAR: "za",
+  RUB: "ru",
+  SAR: "sa"
 };
 
-const amountInput = document.getElementById("amount");
-const fromCurrency = document.getElementById("fromCurrency");
-const toCurrency = document.getElementById("toCurrency");
-const resultText = document.getElementById("result");
-const fromFlag = document.getElementById("fromFlag");
-const toFlag = document.getElementById("toFlag");
-
-let currencyRates = {};
-
 // Populate currency dropdowns
-async function populateCurrencies() {
-  try {
-    const response = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
-    const data = await response.json();
-    currencyRates = data.rates;
+Object.keys(countryCurrency).forEach((code) => {
+  const option1 = new Option(code, code);
+  const option2 = new Option(code, code);
+  currencySelect.add(option1);
+  toCurrencySelect.add(option2);
+});
 
-    const currencyCodes = Object.keys(currencyToCountry);
+// Default selected
+currencySelect.value = "USD";
+toCurrencySelect.value = "NGN";
 
-    currencyCodes.forEach(code => {
-      const option1 = document.createElement("option");
-      option1.value = code;
-      option1.textContent = code;
-      fromCurrency.appendChild(option1);
-
-      const option2 = document.createElement("option");
-      option2.value = code;
-      option2.textContent = code;
-      toCurrency.appendChild(option2);
-    });
-
-    // Set default selected values
-    fromCurrency.value = "USD";
-    toCurrency.value = "NGN";
-
-    updateFlags();
-    convertCurrency();
-  } catch (error) {
-    console.error("Failed to load currencies:", error);
-    resultText.textContent = "Failed to load currency data.";
-  }
+// Update flag
+function updateFlag(selectElement, imgElement) {
+  const code = selectElement.value;
+  imgElement.src = `https://flagcdn.com/48x36/${countryCurrency[code]}.png`;
 }
 
-// Update flag images
-function updateFlags() {
-  const fromCode = fromCurrency.value;
-  const toCode = toCurrency.value;
-
-  const fromCountry = currencyToCountry[fromCode];
-  const toCountry = currencyToCountry[toCode];
-
-  if (fromCountry) {
-    fromFlag.src = `https://flagcdn.com/24x18/${fromCountry.toLowerCase()}.png`;
-  } else {
-    fromFlag.src = "";
-  }
-
-  if (toCountry) {
-    toFlag.src = `https://flagcdn.com/24x18/${toCountry.toLowerCase()}.png`;
-  } else {
-    toFlag.src = "";
-  }
-}
-
-
-// Perform currency conversion
+// Convert currency
 async function convertCurrency() {
-  const amount = parseFloat(amountInput.value);
-  const from = fromCurrency.value;
-  const to = toCurrency.value;
+  const from = currencySelect.value;
+  const to = toCurrencySelect.value;
+  const amount = document.getElementById("amount").value;
 
-  if (isNaN(amount) || amount <= 0) {
-    resultText.textContent = "Please enter a valid amount.";
+  if (!amount || isNaN(amount)) {
+    resultDisplay.textContent = "Please enter a valid amount";
     return;
   }
 
-  resultText.textContent = "Converting...";
-
   try {
-    const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}`);
-    const data = await response.json();
+    const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}`);
+    const data = await res.json();
     const rate = data.rates[to];
     const converted = (amount * rate).toFixed(2);
 
-    resultText.innerHTML = `
-      ${amount} ${from} = <strong>${Number(converted).toLocaleString()}</strong> ${to}<br>
-      <small>Exchange rate: 1 ${from} = ${rate.toFixed(2)} ${to}</small>
+    resultDisplay.innerHTML = `
+      <p>${amount} ${from} = <strong>${converted} ${to}</strong></p>
+      <p>💱 1 ${from} = ${rate} ${to}</p>
     `;
   } catch (error) {
-    console.error("Conversion failed:", error);
-    resultText.textContent = "Conversion failed. Please check your internet.";
+    resultDisplay.textContent = "Failed to fetch exchange rate.";
+    console.error(error);
   }
 }
 
 // Event listeners
-fromCurrency.addEventListener("change", () => {
-  updateFlags();
-  convertCurrency();
-});
-
-toCurrency.addEventListener("change", () => {
-  updateFlags();
-  convertCurrency();
-});
-
 amountInput.addEventListener("input", convertCurrency);
+currencySelect.addEventListener("change", () => {
+  updateFlag(currencySelect, fromFlag);
+  convertCurrency();
+});
+toCurrencySelect.addEventListener("change", () => {
+  updateFlag(toCurrencySelect, toFlag);
+  convertCurrency();
+});
 
-// Initialize on page load
-populateCurrencies();
+// Initialize flags
+updateFlag(currencySelect, fromFlag);
+updateFlag(toCurrencySelect, toFlag);
+
+function toggleMenu() {
+  const menu = document.getElementById("dropdownMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Optional: Close the menu when clicking outside
+window.addEventListener("click", function(e) {
+  const menu = document.getElementById("dropdownMenu");
+  const icon = document.querySelector(".menu-icon");
+  if (!menu.contains(e.target) && !icon.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});
+
